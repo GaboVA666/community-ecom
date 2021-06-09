@@ -1,0 +1,33 @@
+name: community-ecom
+recipe: lamp
+
+config:
+  webroot: pub
+  php: '7.4'
+  composer_version: '1.10.22'
+  xdebug: true
+services:
+  appserver:
+    type: php:7.4
+    build_as_root:
+      - apt-get update -y
+      - apt install libxslt1-dev -y
+      - docker-php-ext-install xsl
+      - docker-php-ext-install sockets
+  database:
+    type: mariadb:10.3.28
+    portforward: false
+    creds:
+      user: magento
+      password: magento
+      database: magento
+  cache:
+    type: redis
+    portforward: 6379
+    persist: true
+  elasticsearch7:
+    type: elasticsearch:7
+    portforward: false
+tooling:
+    redis-cli:
+      service: cache
