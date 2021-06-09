@@ -1,6 +1,5 @@
 name: community-ecom
 recipe: lamp
-
 config:
   webroot: pub
   php: '7.4'
